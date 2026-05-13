@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vero. | Cinematic Portfolio</title>
+    <meta name="description" content="Cinematische video producties door Vero. High-end beelden voor merken en artiesten.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: #121212;
+            --text-main: #f5f5f7;
+            --text-dim: #a1a1a6;
+            --accent-red: #be1e2d; /* Uit Screenshot 2026-05-12 at 15.35.58.png */
+            --accent-yellow: #f1b92a;
+            --accent-blue: #4a90e2;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-deep); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+
+        /* --- Bewegende Elementen (Scroll Reveal) --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Navigatie --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-size: 1.8rem; font-weight: 800; color: white; text-decoration: none; }
+        .logo span { color: var(--accent-red); font-size: 2.2rem; line-height: 0; margin-left: 1px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; }
+        .nav-links a:hover { color: white; }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1492691523567-6170c2295b3f?auto=format&fit=crop&q=80&w=2070') center/cover;
+        }
+        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 800; margin-bottom: 25px; line-height: 1; }
+        .hero h1 span { color: var(--accent-red); }
+        .hero p { color: var(--text-dim); font-size: 1.25rem; max-width: 650px; }
+
+        .btn {
+            padding: 18px 38px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; font-size: 0.95rem; transition: var(--transition);
+            display: inline-block; cursor: pointer; border: none;
+        }
+        .btn-primary { background: var(--accent-red); color: white; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(190, 30, 45, 0.4); }
+
+        /* --- Secties --- */
+        section { padding: 120px 8%; }
+        .section-title { font-size: 2.5rem; text-align: center; margin-bottom: 60px; font-weight: 800; }
+        .section-title span { color: var(--accent-red); }
+
+        /* --- Portfolio (3 Onderwerpen) --- */
+        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .subject-card {
+            background: var(--bg-card); border-radius: 24px; overflow: hidden; cursor: pointer;
+            transition: var(--transition); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .subject-card:hover { transform: translateY(-10px); border-color: var(--accent-red); }
+        .subject-img { width: 100%; height: 450px; object-fit: cover; filter: grayscale(40%); transition: 0.6s; }
+        .subject-card:hover .subject-img { filter: grayscale(0%); transform: scale(1.05); }
+        .subject-info { padding: 30px; text-align: center; }
+        .subject-info h3 { font-size: 1.6rem; margin-bottom: 5px; }
+        .subject-info p { color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* --- Modal System --- */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 2000; display: none; padding: 60px 8%; overflow-y: auto;
+        }
+        .modal.active { display: block; animation: fadeIn 0.4s ease; }
+        .close-modal { position: fixed; top: 30px; right: 30px; cursor: pointer; color: white; z-index: 2100; }
+        .modal-content { max-width: 1100px; margin: 0 auto; }
+        .modal-header { text-align: center; margin-bottom: 60px; }
+        .modal-header h2 { font-size: 3.5rem; margin-bottom: 20px; }
+        .work-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .work-gallery img { width: 100%; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+
+        /* --- Services --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: var(--bg-card); padding: 50px 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .service-card:hover { border-color: var(--accent-red); background: #161616; }
+        .service-card i { color: var(--accent-red); margin-bottom: 20px; }
+
+        /* --- Pricing --- */
+        .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .price-card {
+            background: var(--bg-card); padding: 50px 40px; border-radius: 35px; width: 380px;
+            border: 1px solid rgba(255,255,255,0.05); text-align: center;
+        }
+        .price-card.featured { border: 2px solid var(--accent-red); position: relative; }
+        .price { font-size: 4rem; font-weight: 800; margin: 20px 0; color: var(--accent-yellow); }
+        .price span { font-size: 1rem; color: var(--text-dim); }
+        .price-list { list-style: none; text-align: left; margin-bottom: 30px; color: var(--text-dim); }
+        .price-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .price-list i { color: var(--accent-blue); }
+
+        /* --- FAQ --- */
+        .faq-wrapper { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 25px 0; cursor: pointer; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: 0.4s ease; color: var(--text-dim); }
+        .faq-item.active .faq-answer { max-height: 200px; padding-top: 20px; }
+
+        /* --- Contact --- */
+        .contact-box { background: var(--bg-card); padding: 60px; border-radius: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        input, select, textarea {
+            width: 100%; padding: 18px; background: #1a1a1a; border: 1px solid #333;
+            border-radius: 12px; color: white; margin-bottom: 15px; outline: none; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--accent-red); }
+        button[type="submit"] { width: 100%; }
+
+        [data-fs-success] { display: none; text-align: center; padding: 40px; background: #1a1a1a; border-radius: 20px; border: 2px solid #f1b92a; color: var(--accent-yellow); font-weight: 600; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        footer { padding: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); font-size: 0.8rem; }
+
+        @media (max-width: 900px) { .contact-box { grid-template-columns: 1fr; gap: 40px; } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">Vero<span>.</span></a>
+        <div class="nav-links">
+            <a href="#portfolio">Werk</a>
+            <a href="#services">Diensten</a>
+            <a href="#pricing">Tarieven</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <a href="#contact" class="btn-primary" style="padding: 10px 25px; font-size: 0.8rem; border-radius: 30px;">Start Project</a>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal">Verhalen die raken<span>.</span></h1>
+        <p class="reveal">Premium cinematografie en fotografie die jouw visie vertaalt naar een blijvende visuele ervaring.</p>
+        <div class="reveal" style="margin-top: 40px;"><a href="#portfolio" class="btn btn-primary">Bekijk werk</a></div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title reveal">Geselecteerd Werk<span>.</span></h2>
+        <div class="subjects-grid" id="subjects-container">
+            </div>
+    </section>
+
+    <div class="modal" id="projectModal">
+        <div class="close-modal" onclick="closeModal()"><i data-lucide="x" size="40"></i></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Project</h2>
+                <p id="modalSummary" style="color: var(--text-dim); font-size: 1.2rem; max-width: 800px; margin: 0 auto;"></p>
+            </div>
+            <div class="work-gallery" id="modalGallery"></div>
+        </div>
+    </div>
+
+    <section id="services" style="background: var(--bg-card);">
+        <h2 class="section-title reveal">Wat ik doe<span>.</span></h2>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <i data-lucide="clapperboard" size="40"></i>
+                <h3>Videografie</h3>
+                <p>High-end bedrijfsvideo's, documentaires en event aftermovies.</p>
+            </div>
+            <div class="service-card reveal">
+                <i data-lucide="camera" size="40"></i>
+                <h3>Fotografie</h3>
+                <p>Scherpe, cinematische beelden voor branding en lifestyle.</p>
+            </div>
+            <div class="service-card reveal">
+                <i data-lucide="instagram" size="40"></i>
+                <h3>Social Content</h3>
+                <p>Vertical video's (Reels/TikTok) die de aandacht grijpen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <h2 class="section-title reveal">Investering<span>.</span></h2>
+        <p style="text-align: center; margin-bottom: 50px; color: var(--text-dim);">Vanaf prijzen – elk project is uniek.</p>
+        <div class="pricing-container">
+            <div class="price-card reveal">
+                <h3>Basis Project</h3>
+                <div class="price">€40<span>*</span></div>
+                <ul class="price-list">
+                    <li><i data-lucide="check" size="16"></i> Montage & Edit</li>
+                    <li><i data-lucide="check" size="16"></i> 1 Revisieronde</li>
+                    <li><i data-lucide="check" size="16"></i> Levering binnen 5 dagen</li>
+                </ul>
+                <a href="#contact" class="btn" style="width: 100%; background: transparent; border: 1px solid white; color: white;">Aanvragen</a>
+            </div>
+            <div class="price-card featured reveal">
+                <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent-red); padding: 5px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; color: white;">MEEST GEKOZEN</div>
+                <h3>Premium Project</h3>
+                <div class="price">€80<span>*</span></div>
+                <ul class="price-list">
+                    <li><i data-lucide="check" size="16"></i> Color Grading</li>
+                    <li><i data-lucide="check" size="16"></i> Drone Beelden</li>
+                    <li><i data-lucide="check" size="16"></i> Onbeperkte Revisies</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width: 100%;">Aanvragen</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 40px; font-size: 0.85rem; color: var(--text-dim);">* Prijsindicatie hangt af van duur, locatie en complexiteit.</p>
+    </section>
+
+    <section id="faq" style="background: var(--bg-card);">
+        <h2 class="section-title reveal">Vragen<span>.</span></h2>
+        <div class="faq-wrapper reveal">
+            <div class="faq-item">
+                <div class="faq-question" style="display:flex; justify-content:space-between; font-weight:700;">Wat is de levertijd? <i data-lucide="plus"></i></div>
+                <div class="faq-answer">Gemiddeld worden video's en foto's binnen 5-10 werkdagen opgeleverd.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" style="display:flex; justify-content:space-between; font-weight:700;">Werk je internationaal? <i data-lucide="plus"></i></div>
+                <div class="faq-answer">Zeker! Ik reis graag voor de juiste beelden. Neem contact op voor reistarieven.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-box reveal">
+            <div>
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">Laten we creëren<span>.</span></h2>
+                <p style="color: var(--text-dim); margin-bottom: 30px;">Klaar om jouw visie werkelijkheid te maken? Stuur me een bericht.</p>
+                <p><i data-lucide="mail" style="vertical-align: middle; margin-right: 15px; color: var(--accent-red);"></i> Abelverminck@outlook.com</p>
+                <p><i data-lucide="phone" style="vertical-align: middle; margin-right: 15px; color: var(--accent-red);"></i> +31 06 184 966 42</p>
+            </div>
+            <div>
+                <div data-fs-success>Bedankt! Je bericht is onderweg.</div>
+                <form id="contact-form">
+                    <input type="text" name="Naam" placeholder="Naam" data-fs-field required>
+                    <input type="email" name="Email" placeholder="Email" data-fs-field required>
+                    <textarea name="Bericht" rows="5" placeholder="Vertel me over je idee..." data-fs-field required></textarea>
+                    <div data-fs-error></div>
+                    <button type="submit" class="btn btn-primary" data-fs-submit-btn>Verstuur Bericht</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="margin-bottom: 10px;">Vero<span>.</span></div>
+        <p>&copy; 2026 Vero Video Production.</p>
+        <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.5;">Inspiratie door: @abelverminck</p>
+    </footer>
+
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#contact-form', formId: 'xgodqlby' });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+    <script>
+        lucide.createIcons();
+
+        // --- CONFIGURATIE: BEWERK HIER JE WERK ---
+        const myWorks = [
+            {
+                id: 1,
+                title: "Automotive",
+                category: "Video & Foto",
+                thumbnail: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800", // Vervang door je eigen foto link
+                summary: "Het vastleggen van snelheid en design. Van high-speed shoots op circuits tot premium auto-exterieur fotografie.",
+                gallery: [
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800",
+                    "https://images.unsplash.com/photo-1492144534655-ad79c964c9ad?q=80&w=800",
+                    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=800"
+                ] // Voeg hier meer linkjes toe voor de modal
+            },
+            {
+                id: 2,
+                title: "Drone Beelden",
+                category: "Cinematic Perspectives",
+                thumbnail: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800",
+                summary: "Unieke perspectieven vanuit de lucht. Ik ben gecertificeerd voor 4K drone videografie en fotografie.",
+                gallery: [
+                    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800",
+                    "https://images.unsplash.com/photo-1473448912268-202a11fb4d55?q=80&w=800"
+                ]
+            },
+            {
+                id: 3,
+                title: "Social Media",
+                category: "High Impact Content",
+                thumbnail: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800",
+                summary: "Snelle, visueel aantrekkelijke video's (TikToks, Reels) die geoptimaliseerd zijn voor maximale engagement.",
+                gallery: [
+                    "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800",
+                    "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800"
+                ]
+            }
+        ];
+
+        // --- UI LOGICA ---
+        function init() {
+            const container = document.getElementById('subjects-container');
+            myWorks.forEach(work => {
+                const card = document.createElement('div');
+                card.className = 'subject-card reveal';
+                card.innerHTML = `
+                    <img src="${work.thumbnail}" class="subject-img" alt="${work.title}">
+                    <div class="subject-info">
+                        <p>${work.category}</p>
+                        <h3>${work.title}</h3>
+                    </div>
+                `;
+                card.onclick = () => openModal(work);
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+            reveal(); // Initiale check voor scroll-reveal
+        }
+
+        function openModal(work) {
+            document.getElementById('modalTitle').innerText = work.title;
+            document.getElementById('modalSummary').innerText = work.summary;
+            const gallery = document.getElementById('modalGallery');
+            gallery.innerHTML = '';
+            work.gallery.forEach(imgUrl => {
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                gallery.appendChild(img);
+            });
+            document.getElementById('projectModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop scrollen op achtergrond
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Scroll & Reveal
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        window.onload = init;
+    </script>
+</body>
+</html>

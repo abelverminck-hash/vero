@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vero. | High-End Videograaf & Cinematic Storytelling</title>
-<meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie en social content marketing.">
-<meta name="keywords" content="Vero, videograaf, video productie, videoclip laten maken, automotive video, Vero productions, Abel Verminck">
-<meta name="author" content="Vero.">
+    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie en social content marketing.">
+    <meta name="keywords" content="Vero, videograaf, video productie, videoclip laten maken, automotive video, Vero productions, Abel Verminck">
+    <meta name="author" content="Vero.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -48,6 +49,7 @@
         .btn { padding: 18px 40px; border-radius: 4px; font-weight: 800; text-decoration: none; transition: 0.3s; display: inline-block; text-transform: uppercase; font-size: 0.8rem; border: none; cursor: pointer; text-align: center; }
         .btn-red { background: var(--accent-red); color: white; }
         .btn-red:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn:disabled { background: #333; color: #777; cursor: not-allowed; transform: none !important; }
 
         /* --- Portfolio & Custom Cursor --- */
         section { padding: 100px 8%; }
@@ -157,6 +159,19 @@
         input:focus, select:focus, textarea:focus { border-color: var(--accent-red); }
         label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
 
+        /* NIEUW: Styling voor de inline formulier meldingen */
+        .form-status {
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            margin-top: 15px;
+        }
+        .form-status.success { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+        .form-status.error { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid #e74c3c; }
+
         /* --- Modal (Pop-up) --- */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
         .modal.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -170,7 +185,6 @@
             pointer-events: auto; 
         }
 
-        /* NIEUW: Dit verbergt de vooraf ingeladen spelers onderaan de pagina */
         .preload-pool {
             position: absolute;
             width: 1px;
@@ -221,8 +235,8 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
-                <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen og impact maken.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scheff oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
    				 <img src="IMG_6992.jpg" alt="Vero">
@@ -327,7 +341,7 @@
                 <p>Locatie: <span>Nederland / Wereldwijd</span></p>
             </div>
 
-            <form action="https://formspree.io/f/xgodqlby" method="POST" class="contact-grid">
+            <form id="contactForm" action="https://formspree.io/f/xgodqlby" method="POST" class="contact-grid">
                 <div>
                     <label>Voornaam</label>
                     <input type="text" name="Voornaam" placeholder="Je voornaam" required>
@@ -351,7 +365,8 @@
                     <textarea name="Details" rows="5" placeholder="Vertel kort wat je in gedachten hebt..." required></textarea>
                 </div>
                 <div class="full-width">
-                    <button type="submit" class="btn btn-red" style="width:100%;">Aanvraag Versturen</button>
+                    <button type="submit" id="submitBtn" class="btn btn-red" style="width:100%;">Aanvraag Versturen</button>
+                    <div id="formStatus" class="form-status"></div>
                 </div>
             </form>
         </div>
@@ -401,7 +416,6 @@
         const preloadPool = document.getElementById('preloadPool');
 
         works.forEach(work => {
-            // 1. Maak de visuele portfolio kaart aan
             const card = document.createElement('div');
             card.className = 'subject-card reveal';
             card.innerHTML = `
@@ -413,12 +427,10 @@
             card.onclick = () => openModal(work.id, work.title, work.isVertical);
             container.appendChild(card);
 
-            // 2. NIEUW: Laad de iFrame stiekem alvast in op de achtergrond van de pagina
             const frame = document.createElement('iframe');
             frame.id = `iframe-${work.id}`;
             frame.width = "100%";
             frame.height = "100%";
-            // We zetten enablejsapi=1 aan zodat we de video dadelijk direct kunnen starten via code
             frame.src = `https://www.youtube-nocookie.com/embed/${work.video}?enablejsapi=1&rel=0`;
             frame.title = work.title;
             frame.frameBorder = "0";
@@ -451,11 +463,60 @@
             });
         }
 
+        // UPDATE: JavaScript handler voor de AJAX Formspree verzending
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', handleFormSubmit);
+
         lucide.createIcons();
         animate();
     }
 
-    // Globale variabele om te onthouden welke video er nu in de pop-up staat te spelen
+    // NIEUW: Deze functie verwerkt het formulier onzichtbaar op de achtergrond
+    async function handleFormSubmit(e) {
+        e.preventDefault(); // Zorgt ervoor dat de pagina NIET doorstuurt naar Formspree
+        
+        const form = e.target;
+        const submitBtn = document.getElementById('submitBtn');
+        const statusDiv = document.getElementById('formStatus');
+        
+        // Zet de knop op "Verzenden..." en schakel hem tijdelijk uit
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Verzenden...";
+        
+        statusDiv.style.display = "none";
+        statusDiv.className = "form-status";
+
+        const data = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                // Succes! Toon strakke melding en reset het formulier
+                statusDiv.innerText = "✓ Je aanvraag is verzonden! Ik neem zo snel mogelijk contact op.";
+                statusDiv.classList.add('success');
+                statusDiv.style.display = "block";
+                form.reset();
+            } else {
+                // Formspree gaf een foutmelding terug
+                throw new Error();
+            }
+        } catch (error) {
+            // Netwerkfout of serverfout
+            statusDiv.innerText = "✕ Oeps! Er ging iets mis bij het verzenden. Probeer het nog eens.";
+            statusDiv.classList.add('error');
+            statusDiv.style.display = "block";
+        } finally {
+            // Zet de knop na afloop altijd weer netjes terug
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Aanvraag Versturen";
+        }
+    }
+
     let activeWorkId = null;
 
     function openModal(workId, title, isVertical) {
@@ -478,10 +539,7 @@
             modalContent.style.height = "auto";
         }
         
-        // Verplaats de reeds ingeladen iFrame uit de achtergrond-pool rechtstreeks naar het pop-up venster!
         modalContent.appendChild(frame);
-        
-        // Stuur een signaal naar YouTube om de video direct met autoplay af te spelen
         frame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         
         modal.classList.add('active');
@@ -491,11 +549,7 @@
     function closeModal() {
         if (activeWorkId) {
             const frame = document.getElementById(`iframe-${activeWorkId}`);
-            
-            // Zet de video op pauze via de YouTube API
             frame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-            
-            // Verplaats de iFrame netjes terug naar de onzichtbare pool op de achtergrond voor de volgende keer
             document.getElementById('preloadPool').appendChild(frame);
         }
         

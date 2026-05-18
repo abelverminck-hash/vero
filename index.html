@@ -57,7 +57,7 @@
         .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; cursor: pointer; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         
-        /* HERSTELD: Geen donkere laag meer bij het eroverheen bewegen (hover) */
+        /* UPDATE: Geen donkere filter meer bij het eroverheen bewegen (hover), alleen inzoomen */
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -118,11 +118,10 @@
         input:focus, select:focus, textarea:focus { border-color: var(--accent-red); }
         label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
 
-        /* --- Modal --- */
+        /* --- Modal (Pop-up) --- */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
         .modal.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        /* HERSTELD: Aspect-ratio voor perfecte videoweergave */
         #modalContent { 
             background: #111; 
             width: 100%;
@@ -172,7 +171,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail streetlight en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -186,7 +185,7 @@
         <div class="workflow-grid">
             <div class="workflow-card reveal">
                 <h3><span>01.</span> Concept & Vibe</h3>
-                <p>We starten met een brainstorm. Wat is het doel og welke sfeer moet de video uitstralen? Samen bepalen we de visuele richting en de locaties zodat de basis 100% solide staat.</p>
+                <p>We starten met een brainstorm. Wat is het doel en welke sfeer moet de video uitstralen? Samen bepalen we de visuele richting en de locaties zodat de basis 100% solide staat.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
@@ -203,7 +202,7 @@
         <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
         <div class="reviews-grid">
             <div class="review-card reveal">
-                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <p>"Vero werkt razendsnel Strain en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
                 <span class="review-author">Liam Verhoeven — Creative Director</span>
             </div>
             <div class="review-card reveal">
@@ -318,7 +317,7 @@
     </footer>
 
     <script>
-    // HERSTELD: Komma's toegevoegd achter de video ID's
+    // UPDATE: Alle komma's staan nu perfect op hun plek!
     const works = [
         { 
             title: "Short Movie", 
@@ -340,7 +339,7 @@
         }
     ];
 
-   function init() {
+    function init() {
         const container = document.getElementById('portfolio-container');
         works.forEach(work => {
             const card = document.createElement('div');
@@ -366,14 +365,14 @@
         animate();
     }
 
-    // Open de pop-up en pas de vorm aan op basis van het type video
+    // UPDATE: Nu met youtube-nocookie server voor supersnel inladen, klikbare titels en fullscreen modus!
     function openModal(title, videoId, isVertical) {
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
         
         document.getElementById('modalTitle').innerText = title;
         
-        // Pas de verhoudingen aan op basis van de video (9:16 voor verticaal, 16:9 voor horizontaal)
+        // Flexibele verhoudingen (9:16 voor verticaal, 16:9 voor horizontaal)
         if (isVertical) {
             modalContent.style.aspectRatio = "9 / 16";
             modalContent.style.width = "100%";
@@ -386,10 +385,10 @@
             modalContent.style.height = "auto";
         }
         
-        // Laad de YouTube video in de speler (inclusief allowfullscreen om te kunnen vergroten!)
+        // De speler die supersnel start via de officiële no-cookie server
         modalContent.innerHTML = `
             <iframe width="100%" height="100%" 
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=0&showinfo=1&rel=0" 
                 title="${title}" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

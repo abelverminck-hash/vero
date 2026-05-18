@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vero. | High-End Videograaf & Cinematic Storytelling</title>
-    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie en social content marketing.">
+    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie og social content marketing.">
     <meta name="keywords" content="Vero, videograaf, video productie, videoclip laten maken, automotive video, Vero productions, Abel Verminck">
     <meta name="author" content="Vero.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -159,7 +159,6 @@
         input:focus, select:focus, textarea:focus { border-color: var(--accent-red); }
         label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
 
-        /* NIEUW: Styling voor de inline formulier meldingen */
         .form-status {
             padding: 15px;
             border-radius: 4px;
@@ -235,7 +234,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scheff oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -350,6 +349,12 @@
                     <label>Achternaam</label>
                     <input type="text" name="Achternaam" placeholder="Je achternaam" required>
                 </div>
+                
+                <div class="full-width">
+                    <label>E-mailadres</label>
+                    <input type="email" name="Email" placeholder="naam@voorbeeld.com" required>
+                </div>
+
                 <div class="full-width">
                     <label>Soort Project</label>
                     <select name="Project Type">
@@ -463,7 +468,6 @@
             });
         }
 
-        // UPDATE: JavaScript handler voor de AJAX Formspree verzending
         const form = document.getElementById('contactForm');
         form.addEventListener('submit', handleFormSubmit);
 
@@ -471,15 +475,13 @@
         animate();
     }
 
-    // NIEUW: Deze functie verwerkt het formulier onzichtbaar op de achtergrond
     async function handleFormSubmit(e) {
-        e.preventDefault(); // Zorgt ervoor dat de pagina NIET doorstuurt naar Formspree
+        e.preventDefault();
         
         const form = e.target;
         const submitBtn = document.getElementById('submitBtn');
         const statusDiv = document.getElementById('formStatus');
         
-        // Zet de knop op "Verzenden..." en schakel hem tijdelijk uit
         submitBtn.disabled = true;
         submitBtn.innerText = "Verzenden...";
         
@@ -496,22 +498,18 @@
             });
             
             if (response.ok) {
-                // Succes! Toon strakke melding en reset het formulier
                 statusDiv.innerText = "✓ Je aanvraag is verzonden! Ik neem zo snel mogelijk contact op.";
                 statusDiv.classList.add('success');
                 statusDiv.style.display = "block";
                 form.reset();
             } else {
-                // Formspree gaf een foutmelding terug
                 throw new Error();
             }
         } catch (error) {
-            // Netwerkfout of serverfout
             statusDiv.innerText = "✕ Oeps! Er ging iets mis bij het verzenden. Probeer het nog eens.";
             statusDiv.classList.add('error');
             statusDiv.style.display = "block";
         } finally {
-            // Zet de knop na afloop altijd weer netjes terug
             submitBtn.disabled = false;
             submitBtn.innerText = "Aanvraag Versturen";
         }

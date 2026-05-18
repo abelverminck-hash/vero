@@ -54,7 +54,6 @@
 
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
         
-        /* Verander cursor naar default 'none' op desktop zodat onze custom cursor het overneemt */
         @media (min-width: 1025px) {
             .subjects-grid { cursor: none; }
             .subject-card { cursor: none; }
@@ -67,7 +66,7 @@
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
         .subject-card h3 { font-size: 1.8rem; font-weight: 800; }
 
-        /* NIEUW: De Custom Play Cursor element */
+        /* Custom Play Cursor */
         .custom-cursor {
             position: fixed;
             width: 80px;
@@ -91,7 +90,6 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
-        /* Activeer de cursor klasse via JavaScript */
         .custom-cursor.visible {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
@@ -183,8 +181,8 @@
     <nav>
         <a href="#" class="logo">Vero<span>.</span></a>
         <div style="display:flex; gap:20px;">
-            <a href="#portfolio" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">WERK</a>
             <a href="#about" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">OVER MIJ</a>
+            <a href="#portfolio" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">WERK</a>
             <a href="#pricing" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">PRIJZEN</a>
             <a href="#contact" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">CONTACT</a>
         </div>
@@ -195,20 +193,15 @@
             <p style="color:var(--accent-red); font-weight:800; letter-spacing:4px; font-size:0.75rem; margin-bottom:15px; text-transform:uppercase;">Videograaf — NL</p>
             <h1>VERO<span>.</span></h1>
             <p style="font-size:1.4rem; max-width:600px; color:var(--text-dim); margin-bottom:40px;">Ik vang jouw verhaal in bewegend beeld. Rauw, cinematisch en met oog voor elk detail.</p>
-            <a href="#portfolio" class="btn btn-red">Projecten bekijken</a>
+            <a href="#about" class="btn btn-red">Maak kennis</a>
         </div>
-    </section>
-
-    <section id="portfolio">
-        <h2 class="section-title reveal">Geselecteerd <span>Werk</span></h2>
-        <div class="subjects-grid" id="portfolio-container"></div>
     </section>
 
     <section id="about" style="background: #030303;">
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -217,7 +210,12 @@
         </div>
     </section>
 
-    <section id="workflow">
+    <section id="portfolio">
+        <h2 class="section-title reveal">Geselecteerd <span>Werk</span></h2>
+        <div class="subjects-grid" id="portfolio-container"></div>
+    </section>
+
+    <section id="workflow" style="background: #030303;">
         <h2 class="section-title reveal">Hoe ik <span>te werk ga</span></h2>
         <div class="workflow-grid">
             <div class="workflow-card reveal">
@@ -235,11 +233,11 @@
         </div>
     </section>
 
-    <section id="reviews" style="background: #030303;">
+    <section id="reviews">
         <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
         <div class="reviews-grid">
             <div class="review-card reveal">
-                <p>"Vero works razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
                 <span class="review-author">Liam Verhoeven — Creative Director</span>
             </div>
             <div class="review-card reveal">
@@ -253,7 +251,7 @@
         </div>
     </section>
 
-    <section id="pricing">
+    <section id="pricing" style="background: #030303;">
         <h2 class="section-title reveal">Investering<span>.</span></h2>
         <div class="pricing-grid">
             <div class="price-card reveal">
@@ -274,7 +272,7 @@
         </div>
     </section>
 
-    <section id="faq" style="background: #030303;">
+    <section id="faq">
         <h2 class="section-title reveal">Veelgestelde <span>Vragen</span></h2>
         <div class="faq-wrapper reveal">
             <div class="faq-item">
@@ -300,7 +298,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" style="background: #030303;">
         <div class="contact-container reveal">
             <div class="contact-info">
                 <h2>Laten we iets <span>vets</span> maken.</h2>
@@ -390,18 +388,16 @@
             container.appendChild(card);
         });
 
-        // FAQ logica
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
             });
         });
 
-        // NIEUW: Logica voor de custom play cursor
         const cursor = document.getElementById('customCursor');
         const portfolioSection = document.getElementById('portfolio');
 
-        if (window.innerWidth > 1024) { // Alleen activeren op desktop schermen
+        if (window.innerWidth > 1024) {
             window.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';

@@ -47,23 +47,28 @@
         .btn-red { background: var(--accent-red); color: white; }
         .btn-red:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
-        /* --- Portfolio & Custom Cursor styling --- */
+        /* --- Portfolio & Custom Cursor --- */
         section { padding: 100px 8%; }
         .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 60px; text-align: center; }
         .section-title span { color: var(--accent-red); }
 
-        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .subjects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, max-content)); 
+            gap: 25px; 
+            justify-content: center; 
+        }
         
         @media (min-width: 1025px) {
             .subjects-grid { cursor: none; }
             .subject-card { cursor: none; }
         }
 
-        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; background: #111; border: 1px solid #1a1a1a; }
+        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; width: 100%; min-width: 350px; max-width: 450px; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
-        .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); }
         .subject-card h3 { font-size: 1.8rem; font-weight: 800; }
 
         /* Custom Play Cursor */
@@ -163,10 +168,23 @@
             pointer-events: auto; 
         }
 
+        /* NIEUW: Dit verbergt de vooraf ingeladen spelers onderaan de pagina */
+        .preload-pool {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
         @media (max-width: 1000px) { 
             .contact-container { grid-template-columns: 1fr; padding: 40px; gap: 40px; } 
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .about-img-box { height: 400px; }
+            .subject-card { max-width: 100%; }
         }
         @media (max-width: 600px) {
             .contact-grid { grid-template-columns: 1fr; }
@@ -201,8 +219,8 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
-                <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen og impact maken.</p>
             </div>
             <div class="about-img-box">
    				 <img src="IMG_6992.jpg" alt="Vero">
@@ -340,12 +358,12 @@
     <div id="modal" class="modal" onclick="closeModal()">
         <div style="max-width: 1000px; width: 100%; pointer-events: none;">
             <h2 id="modalTitle" style="font-size: 3rem; margin-bottom: 20px; text-align: center;"></h2>
-            <div id="modalContent">
-                [ Showcase ]
-            </div>
+            <div id="modalContent"></div>
             <p style="text-align: center; margin-top: 20px; color: var(--text-dim);">Klik buiten dit venster om te sluiten</p>
         </div>
     </div>
+
+    <div id="preloadPool" class="preload-pool"></div>
 
     <footer style="padding: 50px; text-align: center; opacity: 0.4; font-size: 0.7rem;">
         VERO PRODUCTION © 2026
@@ -354,18 +372,21 @@
     <script>
     const works = [
         { 
+            id: "work-0",
             title: "Short Movie", 
             img: "Screenshot 2026-05-18 at 09.04.58.png",
             video: "EHAJANRjTwg",
 			isVertical: false
         },
         { 
+            id: "work-1",
             title: "Aftermovie Hackaton", 
             img: "Screenshot 2026-05-18 at 09.21.51.png",
             video: "LeJILICLGHs",
 			isVertical: false
         },
         { 
+            id: "work-2",
             title: "Workshop hondenschool", 
             img: "Screenshot 2026-05-18 at 09.35.44.png",
             video: "DlLtMKoj954",
@@ -375,17 +396,33 @@
 
     function init() {
         const container = document.getElementById('portfolio-container');
+        const preloadPool = document.getElementById('preloadPool');
+
         works.forEach(work => {
+            // 1. Maak de visuele portfolio kaart aan
             const card = document.createElement('div');
             card.className = 'subject-card reveal';
             card.innerHTML = `
-                <img src="${work.img}" class="subject-img">
+                <img src="${work.img}" class="subject-img" loading="lazy">
                 <div class="subject-overlay">
                     <h3>${work.title}</h3>
                 </div>
             `;
-            card.onclick = () => openModal(work.title, work.video, work.isVertical);
+            card.onclick = () => openModal(work.id, work.title, work.isVertical);
             container.appendChild(card);
+
+            // 2. NIEUW: Laad de iFrame stiekem alvast in op de achtergrond van de pagina
+            const frame = document.createElement('iframe');
+            frame.id = `iframe-${work.id}`;
+            frame.width = "100%";
+            frame.height = "100%";
+            // We zetten enablejsapi=1 aan zodat we de video dadelijk direct kunnen starten via code
+            frame.src = `https://www.youtube-nocookie.com/embed/${work.video}?enablejsapi=1&rel=0`;
+            frame.title = work.title;
+            frame.frameBorder = "0";
+            frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+            frame.allowFullscreen = true;
+            preloadPool.appendChild(frame);
         });
 
         document.querySelectorAll('.faq-item').forEach(item => {
@@ -416,11 +453,16 @@
         animate();
     }
 
-    function openModal(title, videoId, isVertical) {
+    // Globale variabele om te onthouden welke video er nu in de pop-up staat te spelen
+    let activeWorkId = null;
+
+    function openModal(workId, title, isVertical) {
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
+        const frame = document.getElementById(`iframe-${workId}`);
         
         document.getElementById('modalTitle').innerText = title;
+        activeWorkId = workId;
         
         if (isVertical) {
             modalContent.style.aspectRatio = "9 / 16";
@@ -434,24 +476,31 @@
             modalContent.style.height = "auto";
         }
         
-        modalContent.innerHTML = `
-            <iframe width="100%" height="100%" 
-                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 
-                title="${title}" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" 
-                allowfullscreen>
-            </iframe>
-        `;
+        // Verplaats de reeds ingeladen iFrame uit de achtergrond-pool rechtstreeks naar het pop-up venster!
+        modalContent.appendChild(frame);
+        
+        // Stuur een signaal naar YouTube om de video direct met autoplay af te spelen
+        frame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
+        if (activeWorkId) {
+            const frame = document.getElementById(`iframe-${activeWorkId}`);
+            
+            // Zet de video op pauze via de YouTube API
+            frame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            
+            // Verplaats de iFrame netjes terug naar de onzichtbare pool op de achtergrond voor de volgende keer
+            document.getElementById('preloadPool').appendChild(frame);
+        }
+        
         document.getElementById('modal').classList.remove('active');
         document.getElementById('modalContent').innerHTML = ''; 
         document.body.style.overflow = 'auto';
+        activeWorkId = null;
     }
 
     function animate() {

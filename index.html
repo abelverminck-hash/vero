@@ -56,7 +56,6 @@
         .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; cursor: pointer; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         
-        /* Geen donkere filter meer bij hover, alleen inzoomen */
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -127,6 +126,8 @@
             border-radius: 12px; 
             overflow: hidden;
             transition: 0.3s;
+            /* DEZE REGEL LOST HET KLIK-PROBLEEM OP! */
+            pointer-events: auto; 
         }
 
         @media (max-width: 1000px) { 
@@ -188,7 +189,7 @@
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
-                <p>Met professionele cinema gear en the juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
+                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>03.</span> Edit & Grading</h3>
@@ -352,7 +353,6 @@
             container.appendChild(card);
         });
 
-        // FAQ logica
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
@@ -363,14 +363,12 @@
         animate();
     }
 
-    // GECORRIGEERD SCRIPT: Volledig geoptimaliseerde YouTube-speler met werkende knoppen en titellinks
     function openModal(title, videoId, isVertical) {
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
         
         document.getElementById('modalTitle').innerText = title;
         
-        // Verhoudingen instellen
         if (isVertical) {
             modalContent.style.aspectRatio = "9 / 16";
             modalContent.style.width = "100%";
@@ -383,7 +381,6 @@
             modalContent.style.height = "auto";
         }
         
-        // De ultieme snelle code: inclusief fullscreen rechten en YouTube link-koppeling (?rel=0)
         modalContent.innerHTML = `
             <iframe width="100%" height="100%" 
                 src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 

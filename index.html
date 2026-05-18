@@ -39,8 +39,7 @@
  		/* --- Hero --- */
         .hero {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.85)), 
-                        url('https://images.unsplash.com/photo-1492691523567-6170c2295b3f?auto=format&fit=crop&q=80&w=2070') center/cover;
+            background: url('hero-bg.jpg') center/cover;
         }
         .hero h1 { font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 800; line-height: 0.85; margin-bottom: 25px; letter-spacing: -3px; }
 
@@ -57,7 +56,7 @@
         .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; cursor: pointer; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         
-        /* UPDATE: Geen donkere filter meer bij het eroverheen bewegen (hover), alleen inzoomen */
+        /* Geen donkere filter meer bij hover, alleen inzoomen */
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -98,7 +97,7 @@
         .faq-item.active .faq-answer { max-height: 200px; padding-top: 20px; }
         .faq-item.active .faq-question { color: var(--accent-red); }
 
-        /* --- Contact Form (Side-by-side) --- */
+        /* --- Contact Form --- */
         .contact-container { 
             display: grid; 
             grid-template-columns: 1fr 1.2fr; 
@@ -171,7 +170,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -189,7 +188,7 @@
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
-                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
+                <p>Met professionele cinema gear en the juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>03.</span> Edit & Grading</h3>
@@ -202,7 +201,7 @@
         <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
         <div class="reviews-grid">
             <div class="review-card reveal">
-                <p>"Vero werkt razendsnel Strain en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
                 <span class="review-author">Liam Verhoeven — Creative Director</span>
             </div>
             <div class="review-card reveal">
@@ -317,7 +316,6 @@
     </footer>
 
     <script>
-    // UPDATE: Alle komma's staan nu perfect op hun plek!
     const works = [
         { 
             title: "Short Movie", 
@@ -365,14 +363,14 @@
         animate();
     }
 
-    // UPDATE: Nu met youtube-nocookie server voor supersnel inladen, klikbare titels en fullscreen modus!
+    // GECORRIGEERD SCRIPT: Volledig geoptimaliseerde YouTube-speler met werkende knoppen en titellinks
     function openModal(title, videoId, isVertical) {
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
         
         document.getElementById('modalTitle').innerText = title;
         
-        // Flexibele verhoudingen (9:16 voor verticaal, 16:9 voor horizontaal)
+        // Verhoudingen instellen
         if (isVertical) {
             modalContent.style.aspectRatio = "9 / 16";
             modalContent.style.width = "100%";
@@ -385,13 +383,13 @@
             modalContent.style.height = "auto";
         }
         
-        // De speler die supersnel start via de officiële no-cookie server
+        // De ultieme snelle code: inclusief fullscreen rechten en YouTube link-koppeling (?rel=0)
         modalContent.innerHTML = `
             <iframe width="100%" height="100%" 
-                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=0&showinfo=1&rel=0" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 
                 title="${title}" 
                 frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" 
                 allowfullscreen>
             </iframe>
         `;

@@ -47,19 +47,55 @@
         .btn-red { background: var(--accent-red); color: white; }
         .btn-red:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
-        /* --- Portfolio --- */
+        /* --- Portfolio & Custom Cursor styling --- */
         section { padding: 100px 8%; }
         .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 60px; text-align: center; }
         .section-title span { color: var(--accent-red); }
 
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
-        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; cursor: pointer; background: #111; border: 1px solid #1a1a1a; }
-        .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         
+        /* Verander cursor naar default 'none' op desktop zodat onze custom cursor het overneemt */
+        @media (min-width: 1025px) {
+            .subjects-grid { cursor: none; }
+            .subject-card { cursor: none; }
+        }
+
+        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; background: #111; border: 1px solid #1a1a1a; }
+        .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
         .subject-card h3 { font-size: 1.8rem; font-weight: 800; }
+
+        /* NIEUW: De Custom Play Cursor element */
+        .custom-cursor {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(190, 30, 45, 0.4);
+        }
+        .custom-cursor span {
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        /* Activeer de cursor klasse via JavaScript */
+        .custom-cursor.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
 
         /* --- About Me --- */
         .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
@@ -126,7 +162,6 @@
             border-radius: 12px; 
             overflow: hidden;
             transition: 0.3s;
-            /* DEZE REGEL LOST HET KLIK-PROBLEEM OP! */
             pointer-events: auto; 
         }
 
@@ -142,6 +177,8 @@
     </style>
 </head>
 <body>
+
+    <div class="custom-cursor" id="customCursor"><span>Play</span></div>
 
     <nav>
         <a href="#" class="logo">Vero<span>.</span></a>
@@ -202,7 +239,7 @@
         <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
         <div class="reviews-grid">
             <div class="review-card reveal">
-                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <p>"Vero works razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
                 <span class="review-author">Liam Verhoeven — Creative Director</span>
             </div>
             <div class="review-card reveal">
@@ -353,11 +390,31 @@
             container.appendChild(card);
         });
 
+        // FAQ logica
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
             });
         });
+
+        // NIEUW: Logica voor de custom play cursor
+        const cursor = document.getElementById('customCursor');
+        const portfolioSection = document.getElementById('portfolio');
+
+        if (window.innerWidth > 1024) { // Alleen activeren op desktop schermen
+            window.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            portfolioSection.addEventListener('mouseenter', () => {
+                cursor.classList.add('visible');
+            });
+
+            portfolioSection.addEventListener('mouseleave', () => {
+                cursor.classList.remove('visible');
+            });
+        }
 
         lucide.createIcons();
         animate();

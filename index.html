@@ -313,20 +313,23 @@
             title: "Short Movie", 
             img: "Screenshot 2026-05-18 at 09.04.58.png",
             video: "EHAJANRjTwg" // Vervang dit door je YouTube ID (bijv: dQw4w9WgXcQ)
+			isVertical: false
         },
         { 
-            title: "Artist Showcase", 
-            img: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800",
-            video: "JOUW_YOUTUBE_ID_HIER"
+            title: "Aftermovie Hackaton", 
+            img: "Screenshot 2026-05-18 at 09.21.51.png",
+            video: "LeJILICLGHs"
+			isVertical: false
         },
         { 
             title: "Brand Identity", 
             img: "https://images.unsplash.com/photo-1492691523567-6170c2295b3f?q=80&w=800",
             video: "JOUW_YOUTUBE_ID_HIER"
+			isVertical: true
         }
     ];
 
-    function init() {
+   function init() {
         const container = document.getElementById('portfolio-container');
         works.forEach(work => {
             const card = document.createElement('div');
@@ -337,8 +340,8 @@
                     <h3>${work.title}</h3>
                 </div>
             `;
-            // Stuur de video ID mee wanneer er geklikt wordt
-            card.onclick = () => openModal(work.title, work.video);
+            // We geven nu ook mee of de video verticaal is of niet
+            card.onclick = () => openModal(work.title, work.video, work.isVertical);
             container.appendChild(card);
         });
 
@@ -353,20 +356,34 @@
         animate();
     }
 
-    // Open de pop-up en laad de YouTube video
-    function openModal(title, videoId) {
+    // Open de pop-up en pas de vorm aan op basis van het type video
+    function openModal(title, videoId, isVertical) {
         const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        
         document.getElementById('modalTitle').innerText = title;
         
-        // Dit zet de YouTube speler in de pop-up box
-        document.getElementById('modalContent').innerHTML = `
+        // Pas de verhoudingen aan op basis van de video (9:16 voor verticaal, 16:9 voor horizontaal)
+        if (isVertical) {
+            modalContent.style.aspectRatio = "9 / 16";
+            modalContent.style.width = "100%";
+            modalContent.style.maxWidth = "360px"; // Zorgt dat het op desktop de vorm van een telefoon heeft
+            modalContent.style.height = "70vh";
+        } else {
+            modalContent.style.aspectRatio = "16 / 9";
+            modalContent.style.width = "100%";
+            modalContent.style.maxWidth = "1000px";
+            modalContent.style.height = "auto";
+        }
+        
+        // Laad de YouTube video in de speler
+        modalContent.innerHTML = `
             <iframe width="100%" height="100%" 
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
                 title="${title}" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen 
-                style="border-radius: 12px; border: none;">
+                allowfullscreen>
             </iframe>
         `;
         
@@ -374,7 +391,7 @@
         document.body.style.overflow = 'hidden';
     }
 
-    // Sluit de pop-up en stop de video direct (zodat het geluid niet door blijft spelen!)
+    // Sluit de pop-up en reset de speler
     function closeModal() {
         document.getElementById('modal').classList.remove('active');
         document.getElementById('modalContent').innerHTML = ''; 

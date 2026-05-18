@@ -37,11 +37,11 @@
         .logo span { color: var(--accent-red); }
 
  		/* --- Hero --- */
-.hero {
-    height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.85)), 
-                url('https://images.unsplash.com/photo-1492691523567-6170c2295b3f?auto=format&fit=crop&q=80&w=2070') center/cover;
-}
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1492691523567-6170c2295b3f?auto=format&fit=crop&q=80&w=2070') center/cover;
+        }
         .hero h1 { font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 800; line-height: 0.85; margin-bottom: 25px; letter-spacing: -3px; }
 
         .btn { padding: 18px 40px; border-radius: 4px; font-weight: 800; text-decoration: none; transition: 0.3s; display: inline-block; text-transform: uppercase; font-size: 0.8rem; border: none; cursor: pointer; text-align: center; }
@@ -56,7 +56,10 @@
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
         .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; cursor: pointer; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
-        .subject-card:hover .subject-img { transform: scale(1.08); filter: brightness(0.6); }
+        
+        /* HERSTELD: Geen donkere laag meer bij het eroverheen bewegen (hover) */
+        .subject-card:hover .subject-img { transform: scale(1.08); }
+        
         .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; }
         .subject-card h3 { font-size: 1.8rem; font-weight: 800; }
 
@@ -119,6 +122,15 @@
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
         .modal.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
+        /* HERSTELD: Aspect-ratio voor perfecte videoweergave */
+        #modalContent { 
+            background: #111; 
+            width: 100%;
+            border-radius: 12px; 
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
         @media (max-width: 1000px) { 
             .contact-container { grid-template-columns: 1fr; padding: 40px; gap: 40px; } 
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -160,7 +172,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail streetlight en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -174,7 +186,7 @@
         <div class="workflow-grid">
             <div class="workflow-card reveal">
                 <h3><span>01.</span> Concept & Vibe</h3>
-                <p>We starten met een brainstorm. Wat is het doel en welke sfeer moet de video uitstralen? Samen bepalen we de visuele richting en de locaties zodat de basis 100% solide staat.</p>
+                <p>We starten met een brainstorm. Wat is het doel og welke sfeer moet de video uitstralen? Samen bepalen we de visuele richting en de locaties zodat de basis 100% solide staat.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
@@ -294,7 +306,7 @@
     <div id="modal" class="modal" onclick="closeModal()">
         <div style="max-width: 1000px; width: 100%; pointer-events: none;">
             <h2 id="modalTitle" style="font-size: 3rem; margin-bottom: 20px; text-align: center;"></h2>
-            <div id="modalContent" style="background: #111; height: 500px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #444;">
+            <div id="modalContent">
                 [ Showcase ]
             </div>
             <p style="text-align: center; margin-top: 20px; color: var(--text-dim);">Klik buiten dit venster om te sluiten</p>
@@ -305,26 +317,25 @@
         VERO PRODUCTION © 2026
     </footer>
 
-    
-	<script>
-    // 1. Vul hier de titels, afbeeldingen én YouTube ID's in van je video's
+    <script>
+    // HERSTELD: Komma's toegevoegd achter de video ID's
     const works = [
         { 
             title: "Short Movie", 
             img: "Screenshot 2026-05-18 at 09.04.58.png",
-            video: "EHAJANRjTwg" // Vervang dit door je YouTube ID (bijv: dQw4w9WgXcQ)
+            video: "EHAJANRjTwg",
 			isVertical: false
         },
         { 
             title: "Aftermovie Hackaton", 
             img: "Screenshot 2026-05-18 at 09.21.51.png",
-            video: "LeJILICLGHs"
+            video: "LeJILICLGHs",
 			isVertical: false
         },
         { 
             title: "Workshop hondenschool", 
             img: "Screenshot 2026-05-18 at 09.35.44.png",
-            video: "DlLtMKoj954"
+            video: "DlLtMKoj954",
 			isVertical: true
         }
     ];
@@ -340,7 +351,6 @@
                     <h3>${work.title}</h3>
                 </div>
             `;
-            // We geven nu ook mee of de video verticaal is of niet
             card.onclick = () => openModal(work.title, work.video, work.isVertical);
             container.appendChild(card);
         });
@@ -367,7 +377,7 @@
         if (isVertical) {
             modalContent.style.aspectRatio = "9 / 16";
             modalContent.style.width = "100%";
-            modalContent.style.maxWidth = "360px"; // Zorgt dat het op desktop de vorm van een telefoon heeft
+            modalContent.style.maxWidth = "360px"; 
             modalContent.style.height = "70vh";
         } else {
             modalContent.style.aspectRatio = "16 / 9";
@@ -376,7 +386,7 @@
             modalContent.style.height = "auto";
         }
         
-        // Laad de YouTube video in de speler
+        // Laad de YouTube video in de speler (inclusief allowfullscreen om te kunnen vergroten!)
         modalContent.innerHTML = `
             <iframe width="100%" height="100%" 
                 src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
@@ -391,7 +401,6 @@
         document.body.style.overflow = 'hidden';
     }
 
-    // Sluit de pop-up en reset de speler
     function closeModal() {
         document.getElementById('modal').classList.remove('active');
         document.getElementById('modalContent').innerHTML = ''; 

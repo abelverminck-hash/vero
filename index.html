@@ -39,7 +39,7 @@
         .logo { font-size: 1.8rem; font-weight: 800; color: white; text-decoration: none; letter-spacing: -1px; }
         .logo span { color: var(--accent-red); }
 
- 		/* --- Hero (AANGEPAST: Hoogte naar 88vh gezet zodat de volgende sectie al een stukje in beeld piept) --- */
+ 		/* --- Hero --- */
         .hero {
             height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%;
             background: url('hero-bg.jpg') center/cover; position: relative;
@@ -51,7 +51,6 @@
         .btn-red:hover { filter: brightness(1.1); transform: translateY(-2px); }
         .btn:disabled { background: #333; color: #777; cursor: not-allowed; transform: none !important; }
 
-        /* NIEUW: Animatie en styling voor de subtiele scroll indicator onderin het startscherm */
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -79,21 +78,24 @@
             60% { transform: translateY(-3px); }
         }
 
+        /* --- Algemene sectie padding (AANGEPAST van 100px naar 160px voor veel meer ademruimte) --- */
+        section { padding: 160px 8%; }
+        
+        /* AANGEPAST: Meer ruimte onder de titels gezet (margin-bottom van 60px naar 80px) */
+        .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 80px; text-align: center; }
+        .section-title span { color: var(--accent-red); }
+
         /* --- About Me --- */
-        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
-        .about-text p { font-size: 1.2rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 20px; }
-        .about-img-box { background: #111; height: 500px; border-radius: 12px; border: 1px solid #1a1a1a; display: flex; align-items: center; justify-content: center; color: #444; overflow: hidden; }
+        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+        .about-text p { font-size: 1.2rem; color: var(--text-dim); line-height: 1.8; margin-bottom: 25px; }
+        .about-img-box { background: #111; height: 550px; border-radius: 12px; border: 1px solid #1a1a1a; display: flex; align-items: center; justify-content: center; color: #444; overflow: hidden; }
         .about-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
         /* --- Portfolio & Custom Cursor --- */
-        section { padding: 100px 8%; }
-        .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 60px; text-align: center; }
-        .section-title span { color: var(--accent-red); }
-
         .subjects-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(350px, max-content)); 
-            gap: 25px; 
+            gap: 30px; /* Iets grotere gap tussen de kaarten */
             justify-content: center; 
         }
         
@@ -102,7 +104,7 @@
             .subject-card { cursor: none; }
         }
 
-        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 500px; width: 100%; min-width: 350px; max-width: 450px; background: #111; border: 1px solid #1a1a1a; }
+        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 520px; width: 100%; min-width: 350px; max-width: 450px; background: #111; border: 1px solid #1a1a1a; }
         .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
         .subject-card:hover .subject-img { transform: scale(1.08); }
         
@@ -139,32 +141,33 @@
         }
 
         /* --- Workflow --- */
-        .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .workflow-card { background: var(--bg-card); padding: 40px; border-radius: 12px; border: 1px solid #1a1a1a; transition: 0.3s; }
+        .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; }
+        .workflow-card { background: var(--bg-card); padding: 50px 40px; border-radius: 12px; border: 1px solid #1a1a1a; transition: 0.3s; }
         .workflow-card:hover { border-color: var(--accent-red); }
-        .workflow-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: var(--text-main); }
+        .workflow-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
         .workflow-card h3 span { color: var(--accent-red); }
-        .workflow-card p { color: var(--text-dim); line-height: 1.6; }
+        .workflow-card p { color: var(--text-dim); line-height: 1.7; }
 
         /* --- Reviews --- */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .review-card { background: var(--bg-card); padding: 40px; border-radius: 12px; border-bottom: 3px solid #1a1a1a; transition: 0.3s; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; }
+        .review-card { background: var(--bg-card); padding: 50px 40px; border-radius: 12px; border-bottom: 3px solid #1a1a1a; transition: 0.3s; }
         .review-card:hover { border-color: var(--accent-red); }
-        .review-author { font-weight: 800; color: var(--accent-red); font-size: 0.75rem; text-transform: uppercase; margin-top: 20px; display: block; }
+        .review-card p { line-height: 1.7; }
+        .review-author { font-weight: 800; color: var(--accent-red); font-size: 0.75rem; text-transform: uppercase; margin-top: 25px; display: block; }
 
         /* --- Pricing --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .price-card { background: var(--bg-card); padding: 80px 40px; border-radius: 12px; text-align: center; border: 1px solid #1a1a1a; transition: 0.4s; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .price-card { background: var(--bg-card); padding: 90px 40px; border-radius: 12px; text-align: center; border: 1px solid #1a1a1a; transition: 0.4s; }
         .price-card:hover { border-color: var(--accent-red); background: #111; transform: translateY(-10px); }
-        .price-tag { font-size: 6rem; font-weight: 800; color: white; display: block; line-height: 1; margin: 20px 0; }
+        .price-tag { font-size: 6rem; font-weight: 800; color: white; display: block; line-height: 1; margin: 25px 0; }
         .price-card:hover .price-tag { color: var(--accent-red); }
 
         /* --- FAQ --- */
         .faq-wrapper { max-width: 800px; margin: 0 auto; }
-        .faq-item { border-bottom: 1px solid #1a1a1a; padding: 25px 0; cursor: pointer; }
+        .faq-item { border-bottom: 1px solid #1a1a1a; padding: 30px 0; cursor: pointer; }
         .faq-question { display: flex; justify-content: space-between; font-weight: 700; transition: 0.3s; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: 0.4s; color: var(--text-dim); padding-top: 0; line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding-top: 20px; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: 0.4s; color: var(--text-dim); padding-top: 0; line-height: 1.7; }
+        .faq-item.active .faq-answer { max-height: 200px; padding-top: 25px; }
         .faq-item.active .faq-question { color: var(--accent-red); }
 
         /* --- Contact Form --- */
@@ -173,15 +176,15 @@
             grid-template-columns: 1fr 1.2fr; 
             gap: 80px; 
             background: var(--bg-card); 
-            padding: 80px; 
+            padding: 90px 80px; 
             border-radius: 12px; 
             border: 1px solid #1a1a1a; 
         }
-        .contact-info h2 { font-size: 3.5rem; line-height: 1; margin-bottom: 30px; letter-spacing: -2px; }
-        .contact-info p { color: var(--text-dim); margin-bottom: 10px; font-size: 1.1rem; }
+        .contact-info h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 40px; letter-spacing: -2px; }
+        .contact-info p { color: var(--text-dim); margin-bottom: 15px; font-size: 1.1rem; }
         .contact-info span { color: var(--accent-red); font-weight: 800; }
 
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .full-width { grid-column: span 2; }
         input, select, textarea { width: 100%; padding: 20px; background: #000; border: 1px solid #222; border-radius: 4px; color: white; outline: none; transition: 0.3s; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent-red); }
@@ -224,8 +227,9 @@
         }
 
         @media (max-width: 1000px) { 
-            .contact-container { grid-template-columns: 1fr; padding: 40px; gap: 40px; } 
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            section { padding: 100px 5%; }
+            .contact-container { grid-template-columns: 1fr; padding: 50px 40px; gap: 50px; } 
+            .about-grid { grid-template-columns: 1fr; gap: 50px; }
             .about-img-box { height: 400px; }
             .subject-card { max-width: 100%; }
         }
@@ -266,7 +270,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -289,7 +293,7 @@
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
-                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
+                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure og dikke shots vast te leggen.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>03.</span> Edit & Grading</h3>
@@ -302,7 +306,7 @@
         <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
         <div class="reviews-grid">
             <div class="review-card reveal">
-                <p>"Vero werkt razendsnel og levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
                 <span class="review-author">Liam Verhoeven — Creative Director</span>
             </div>
             <div class="review-card reveal">

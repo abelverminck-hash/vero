@@ -78,10 +78,8 @@
             60% { transform: translateY(-3px); }
         }
 
-        /* --- Algemene sectie padding (AANGEPAST van 100px naar 160px voor veel meer ademruimte) --- */
+        /* --- Algemene sectie padding --- */
         section { padding: 160px 8%; }
-        
-        /* AANGEPAST: Meer ruimte onder de titels gezet (margin-bottom van 60px naar 80px) */
         .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 80px; text-align: center; }
         .section-title span { color: var(--accent-red); }
 
@@ -95,7 +93,7 @@
         .subjects-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(350px, max-content)); 
-            gap: 30px; /* Iets grotere gap tussen de kaarten */
+            gap: 30px; 
             justify-content: center; 
         }
         
@@ -162,6 +160,40 @@
         .price-tag { font-size: 6rem; font-weight: 800; color: white; display: block; line-height: 1; margin: 25px 0; }
         .price-card:hover .price-tag { color: var(--accent-red); }
 
+        /* NIEUW: Oneindig bewegende ticker balk (Lichtkrant-effect) */
+        .ticker-wrap {
+            width: 100%;
+            background: #0d0d0d;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 20px 0;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: marquee 25s linear infinite;
+        }
+        .ticker-item {
+            display: inline-block;
+            padding: 0 30px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
+        .ticker-item span {
+            color: var(--accent-red);
+            margin-right: 15px;
+        }
+        @keyframes marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
         /* --- FAQ --- */
         .faq-wrapper { max-width: 800px; margin: 0 auto; }
         .faq-item { border-bottom: 1px solid #1a1a1a; padding: 30px 0; cursor: pointer; }
@@ -202,6 +234,30 @@
         .form-status.success { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
         .form-status.error { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid #e74c3c; }
 
+        /* NIEUW: Subtiele Zwevende Snelle Contactknop (Floating CTA) */
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-red);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(190, 30, 45, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+        }
+        .floating-cta:hover {
+            transform: scale(1.1) translateY(-3px);
+            background: white;
+            color: var(--accent-red);
+        }
+
         /* --- Modal (Pop-up) --- */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
         .modal.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -232,6 +288,7 @@
             .about-grid { grid-template-columns: 1fr; gap: 50px; }
             .about-img-box { height: 400px; }
             .subject-card { max-width: 100%; }
+            .floating-cta { bottom: 20px; right: 20px; width: 50px; height: 50px; }
         }
         @media (max-width: 600px) {
             .contact-grid { grid-template-columns: 1fr; }
@@ -240,6 +297,10 @@
     </style>
 </head>
 <body>
+
+    <a href="#contact" class="floating-cta" title="Snel contact opnemen">
+        <i data-lucide="message-square" style="width: 24px; height: 24px;"></i>
+    </a>
 
     <div class="custom-cursor" id="customCursor"><span>Play</span></div>
 
@@ -270,7 +331,7 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
-                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascination voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
                 <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ik zorg voor beelden die blijven hangen en impact maken.</p>
             </div>
             <div class="about-img-box">
@@ -293,7 +354,7 @@
             </div>
             <div class="workflow-card reveal">
                 <h3><span>02.</span> De Draaidag</h3>
-                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure og dikke shots vast te leggen.</p>
+                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
             </div>
             <div class="workflow-card reveal">
                 <h3><span>03.</span> Edit & Grading</h3>
@@ -320,7 +381,7 @@
         </div>
     </section>
 
-    <section id="pricing" style="background: #030303;">
+    <section id="pricing" style="background: #030303; padding-bottom: 100px;">
         <h2 class="section-title reveal">Investering<span>.</span></h2>
         <div class="pricing-grid">
             <div class="price-card reveal">
@@ -337,6 +398,19 @@
                 <h3>Custom</h3>
                 <span class="price-tag">POA</span>
                 <p>Projecten op maat</p>
+            </div>
+        </div>
+
+        <div class="ticker-wrap reveal">
+            <div class="ticker">
+                <div class="ticker-item"><span>•</span> Alle tarieven zijn richtlijnen</div>
+                <div class="ticker-item"><span>•</span> Elk project is uniek maatwerk</div>
+                <div class="ticker-item"><span>•</span> Exclusief eventuele reiskosten en BTW</div>
+                <div class="ticker-item"><span>•</span> Neem contact op voor een exacte prijsopgave</div>
+                <div class="ticker-item"><span>•</span> Alle tarieven zijn richtlijnen</div>
+                <div class="ticker-item"><span>•</span> Elk project is uniek maatwerk</div>
+                <div class="ticker-item"><span>•</span> Exclusief eventuele reiskosten en BTW</div>
+                <div class="ticker-item"><span>•</span> Neem contact op voor een exacte prijsopgave</div>
             </div>
         </div>
     </section>

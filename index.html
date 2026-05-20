@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vero. | High-End Videograaf & Cinematic Storytelling</title>
+    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie en social content marketing.">
+    <meta name="keywords" content="Vero, videograaf, video productie, videoclip laten maken, automotive video, Vero productions, Abel Verminck">
+    <meta name="author" content="Vero.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: #0d0d0d;
+            --text-main: #f5f5f7;
+            --text-dim: #a1a1a6;
+            --accent-red: #be1e2d;
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-deep); color: var(--text-main); overflow-x: hidden; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Navigatie --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(15px);
+        }
+        .logo { font-size: 1.8rem; font-weight: 800; color: white; text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--accent-red); }
+
+ 		/* --- Hero --- */
+        .hero {
+            height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%;
+            background: url('hero-bg.jpg') center/cover; position: relative;
+        }
+        .hero h1 { font-size: clamp(3.5rem, 11vw, 7.5rem); font-weight: 800; line-height: 0.85; margin-bottom: 25px; letter-spacing: -3px; }
+
+        .btn { padding: 18px 40px; border-radius: 4px; font-weight: 800; text-decoration: none; transition: 0.3s; display: inline-block; text-transform: uppercase; font-size: 0.8rem; border: none; cursor: pointer; text-align: center; }
+        .btn-red { background: var(--accent-red); color: white; }
+        .btn-red:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn:disabled { background: #333; color: #777; cursor: not-allowed; transform: none !important; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 8%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .scroll-indicator:hover { color: white; }
+        .scroll-indicator i {
+            animation: bounce 2s infinite;
+            color: var(--accent-red);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        /* --- Algemene sectie padding --- */
+        section { padding: 160px 8%; }
+        .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 80px; text-align: center; }
+        .section-title span { color: var(--accent-red); }
+
+        /* --- About Me --- */
+        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+        .about-text p { font-size: 1.2rem; color: var(--text-dim); line-height: 1.8; margin-bottom: 25px; }
+        .about-img-box { background: #111; height: 550px; border-radius: 12px; border: 1px solid #1a1a1a; display: flex; align-items: center; justify-content: center; color: #444; overflow: hidden; }
+        .about-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- Portfolio & Custom Cursor --- */
+        .subjects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            justify-content: center; 
+        }
+        
+        @media (min-width: 1025px) {
+            .subjects-grid { cursor: none; }
+            .subject-card { cursor: none; }
+        }
+
+        .subject-card { border-radius: 12px; position: relative; overflow: hidden; height: 520px; width: 100%; min-width: 280px; background: #111; border: 1px solid #1a1a1a; }
+        .subject-img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
+        .subject-card:hover .subject-img { transform: scale(1.08); }
+        
+        .subject-overlay { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); }
+        .subject-card h3 { font-size: 1.8rem; font-weight: 800; }
+
+        /* Custom Play Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(190, 30, 45, 0.4);
+        }
+        .custom-cursor span {
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .custom-cursor.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* --- Workflow --- */
+        .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; }
+        .workflow-card { background: var(--bg-card); padding: 50px 40px; border-radius: 12px; border: 1px solid #1a1a1a; transition: 0.3s; }
+        .workflow-card:hover { border-color: var(--accent-red); }
+        .workflow-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
+        .workflow-card h3 span { color: var(--accent-red); }
+        .workflow-card p { color: var(--text-dim); line-height: 1.7; }
+
+        /* --- Reviews --- */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; }
+        .review-card { background: var(--bg-card); padding: 50px 40px; border-radius: 12px; border-bottom: 3px solid #1a1a1a; transition: 0.3s; }
+        .review-card:hover { border-color: var(--accent-red); }
+        .review-card p { line-height: 1.7; }
+        .review-author { font-weight: 800; color: var(--accent-red); font-size: 0.75rem; text-transform: uppercase; margin-top: 25px; display: block; }
+
+        /* --- Pricing --- */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .price-card { background: var(--bg-card); padding: 60px 25px; border-radius: 12px; text-align: center; border: 1px solid #1a1a1a; transition: 0.4s; display: flex; flex-direction: column; justify-content: center; }
+        .price-card:hover { border-color: var(--accent-red); background: #111; transform: translateY(-10px); }
+        .price-card h3 { font-size: 1.2rem; font-weight: 800; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .price-tag { font-size: 3.2rem; font-weight: 800; color: white; display: block; line-height: 1.1; margin: 20px 0; letter-spacing: -1px; }
+        .price-card:hover .price-tag { color: var(--accent-red); }
+        .price-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.4; }
+
+        /* Oneindig snelle en vlekkeloze loop ticker */
+        .ticker-wrap {
+            width: 100%;
+            background: #0d0d0d;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 22px 0;
+            overflow: hidden;
+            margin-top: 60px;
+            display: flex;
+        }
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 12s linear infinite;
+        }
+        .ticker-item {
+            display: inline-block;
+            padding: 0 40px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
+        .ticker-item span {
+            color: var(--accent-red);
+            margin-right: 15px;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- FAQ --- */
+        .faq-wrapper { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid #1a1a1a; padding: 30px 0; cursor: pointer; }
+        .faq-question { display: flex; justify-content: space-between; font-weight: 700; transition: 0.3s; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: 0.4s; color: var(--text-dim); padding-top: 0; line-height: 1.7; }
+        .faq-item.active .faq-answer { max-height: 200px; padding-top: 25px; }
+        .faq-item.active .faq-question { color: var(--accent-red); }
+
+        /* --- Contact Form --- */
+        .contact-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1.2fr; 
+            gap: 80px; 
+            background: var(--bg-card); 
+            padding: 90px 80px; 
+            border-radius: 12px; 
+            border: 1px solid #1a1a1a; 
+        }
+        .contact-info h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 40px; letter-spacing: -2px; }
+        .contact-info p { color: var(--text-dim); margin-bottom: 15px; font-size: 1.1rem; }
+        .contact-info span { color: var(--accent-red); font-weight: 800; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .full-width { grid-column: span 2; }
+        input, select, textarea { width: 100%; padding: 20px; background: #000; border: 1px solid #222; border-radius: 4px; color: white; outline: none; transition: 0.3s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-red); }
+        label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
+
+        .form-status {
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            margin-top: 15px;
+        }
+        .form-status.success { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+        .form-status.error { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid #e74c3c; }
+
+        /* Subtiele Zwevende Snelle Contactknop (Floating CTA) */
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-red);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(190, 30, 45, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+        }
+        .floating-cta:hover {
+            transform: scale(1.1) translateY(-3px);
+            background: white;
+            color: var(--accent-red);
+        }
+
+        /* --- Modal (Pop-up) --- */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
+        .modal.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        #modalContent { 
+            background: #111; 
+            width: 100%;
+            border-radius: 12px; 
+            overflow: hidden;
+            transition: 0.3s;
+            pointer-events: auto; 
+        }
+
+        .preload-pool {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        @media (max-width: 1000px) { 
+            section { padding: 100px 5%; }
+            .contact-container { grid-template-columns: 1fr; padding: 50px 40px; gap: 50px; } 
+            .about-grid { grid-template-columns: 1fr; gap: 50px; }
+            .about-img-box { height: 400px; }
+            .subject-card { max-width: 100%; }
+            .floating-cta { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+        }
+        @media (max-width: 600px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#contact" class="floating-cta" title="Snel contact opnemen">
+        <i data-lucide="message-square" style="width: 24px; height: 24px;"></i>
+    </a>
+
+    <div class="custom-cursor" id="customCursor"><span>Play</span></div>
+
+    <nav>
+        <a href="#" class="logo">Vero<span>.</span></a>
+        <div style="display:flex; gap:20px;">
+            <a href="#about" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">OVER MIJ</a>
+            <a href="#portfolio" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">WERK</a>
+            <a href="#pricing" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">PRIJZEN</a>
+            <a href="#contact" style="color:white; text-decoration:none; font-weight:800; font-size:0.7rem;">CONTACT</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="reveal">
+            <p style="color:var(--accent-red); font-weight:800; letter-spacing:4px; font-size:0.75rem; margin-bottom:15px; text-transform:uppercase;">Videograaf — NL</p>
+            <h1>VERO<span>.</span></h1>
+            <p style="font-size:1.4rem; max-width:600px; color:var(--text-dim); margin-bottom:40px;">Ik vang jouw verhaal in bewegend beeld. Rauw, cinematisch en met oog voor elk detail.</p>
+            <a href="#about" class="btn btn-red">Maak kennis</a>
+        </div>
+        
+        <a href="#about" class="scroll-indicator">
+            <i data-lucide="arrow-down" style="width: 16px; height: 16px;"></i> Ontdek meer
+        </a>
+    </section>
+
+    <section id="about" style="background: #030303;">
+        <div class="about-grid reveal">
+            <div class="about-text">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px;">Het gezicht achter <span>Vero.</span></h2>
+                <p>Ik ben een gepassioneerde videograaf met een scherp oog voor detail en cinematische storytelling. Wat ooit begon als een fascinatie voor beeld, is uitgegroeid tot een creatieve agency waar ik verhalen transformeer tot high-end video's.</p>
+                <p>Of het nu gaat om een brute automotive video, de pure energie van een artiest, of een strakke commercial voor een merk; ich zorg voor beelden die blijven hangen en impact maken.</p>
+            </div>
+            <div class="about-img-box">
+   				 <img src="IMG_6992.jpg" alt="Vero">
+			</div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title reveal">Geselecteerd <span>Werk</span></h2>
+        <div class="subjects-grid" id="portfolio-container"></div>
+    </section>
+
+    <section id="workflow" style="background: #030303;">
+        <h2 class="section-title reveal">Hoe ik <span>te werk ga</span></h2>
+        <div class="workflow-grid">
+            <div class="workflow-card reveal">
+                <h3><span>01.</span> Concept & Vibe</h3>
+                <p>We starten met een brainstorm. Wat is het doel en welke sfeer moet de video uitstralen? Samen bepalen we de visuele richting en de locaties zodat de basis 100% solide staat.</p>
+            </div>
+            <div class="workflow-card reveal">
+                <h3><span>02.</span> De Draaidag</h3>
+                <p>Met professionele cinema gear en de juiste instelling gaan we de set op. Ik zorg voor een relaxte maar gefocuste sfeer om de meest pure en dikke shots vast te leggen.</p>
+            </div>
+            <div class="workflow-card reveal">
+                <h3><span>03.</span> Edit & Grading</h3>
+                <p>Hier komt de video tot leven. In de montage zorg ik voor naadloze overgangen, custom sound design en een bioscoopwaardige kleurcorrectie (color grading) voor die echte premium look.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <h2 class="section-title reveal">Wat men <span>vindt</span></h2>
+        <div class="reviews-grid">
+            <div class="review-card reveal">
+                <p>"Vero werkt razendsnel en levert beelden die direct bruikbaar zijn voor onze socials. Echt een aanrader."</p>
+                <span class="review-author">Liam Verhoeven — Creative Director</span>
+            </div>
+            <div class="review-card reveal">
+                <p>"Eindelijk iemand die de vibe van onze muziek begrijpt. De edit was on point!"</p>
+                <span class="review-author">Nora Jacobs — Artist</span>
+            </div>
+            <div class="review-card reveal">
+                <p>"Professioneel van begin tot eind. De beelden spreken voor zich."</p>
+                <span class="review-author">Daan Smeets — Automotive Marketing</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" style="background: #030303; padding-bottom: 100px;">
+        <h2 class="section-title reveal">Investering<span>.</span></h2>
+        
+        <div class="pricing-grid">
+            <div class="price-card reveal">
+                <h3>Photo shoot</h3>
+                <span class="price-tag" style="font-size: 2.8rem;">€49-59</span>
+                <p>High-end fotografie op locatie</p>
+            </div>
+            <div class="price-card reveal">
+                <h3>Short promo video</h3>
+                <span class="price-tag">€99</span>
+                <p>Opname met telefoon + professionele edit</p>
+            </div>
+            <div class="price-card reveal">
+                <h3>Drone clip add-on</h3>
+                <span class="price-tag">€49</span>
+                <p>Cinematische luchtbeelden als toevoeging</p>
+            </div>
+            <div class="price-card reveal">
+                <h3>Simple website</h3>
+                <span class="price-tag">€149</span>
+                <p>Strakke, converterende landingpage</p>
+            </div>
+        </div>
+
+        <div class="ticker-wrap reveal">
+            <div class="ticker">
+                <div class="ticker-item"><span>•</span> Alle tarieven zijn basisprijzen</div>
+                <div class="ticker-item"><span>•</span> Elk project is uniek maatwerk</div>
+                <div class="ticker-item"><span>•</span> Exclusief eventuele reiskosten en BTW</div>
+                <div class="ticker-item"><span>•</span> Neem contact op voor een exacte prijsopgave</div>
+                
+                <div class="ticker-item"><span>•</span> Alle tarieven zijn basisprijzen</div>
+                <div class="ticker-item"><span>•</span> Elk project is uniek maatwerk</div>
+                <div class="ticker-item"><span>•</span> Exclusief eventuele reiskosten en BTW</div>
+                <div class="ticker-item"><span>•</span> Neem contact op voor een exacte prijsopgave</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2 class="section-title reveal">Veelgestelde <span> Vragen</span></h2>
+        <div class="faq-wrapper reveal">
+            <div class="faq-item">
+                <div class="faq-question">Help je ook met het bedenken van het concept? <i data-lucide="chevron-down"></i></div>
+                <div class="faq-answer">Zeker. Of je nu al een volledig script hebt of alleen nog maar een vaag idee: ik denk graag mee over de visuele richting en de 'vibe' om te zorgen dat de video echt impact maakt.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Hoe zit het met de muziekrechten voor mijn video? <i data-lucide="chevron-down"></i></div>
+                <div class="faq-answer">Ik gebruik professionele licentie-platformen voor de muziek. Dit betekent dat je de video zonder zorgen overal kunt plaatsen (Instagram, YouTube, Ads) zonder copyright-problemen.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Wat als ik achteraf toch iets wil aanpassen? <i data-lucide="chevron-down"></i></div>
+                <div class="faq-answer">Bij elke productie zit standaard één uitgebreide revisieronde inbegrepen. Hierin kunnen we de puntjes op de i zetten qua timing of kleur, zodat de video 100% naar wens is.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Werk je ook buiten Nederland? <i data-lucide="chevron-down"></i></div>
+                <div class="faq-answer">Geen probleem. Ik ben overal inzetbaar waar een goed verhaal te vertellen is. Voor opdrachten buiten de regio reken ik enkel de reiskosten door.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">In welk format lever je de video's op? <i data-lucide="chevron-down"></i></div>
+                <div class="faq-answer">Ik lever standaard op in 4K kwaliteit. Daarnaast zorg ik dat de video direct klaar is voor het juiste platform, of dat nu een bioscoopscherm of een TikTok-feed is.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: #030303;">
+        <div class="contact-container reveal">
+            <div class="contact-info">
+                <h2>Laten we iets <span>vets</span> maken.</h2>
+                <p>E-mail: <span>verovideoproductions@gmail.com</span></p>
+                <p>WhatsApp: <span>+31 6 184 966 42</span></p>
+                <p>Locatie: <span>Nederland / Wereldwijd</span></p>
+            </div>
+
+            <form id="contactForm" action="https://formspree.io/f/xgodqlby" method="POST" class="contact-grid">
+                <div>
+                    <label>Voornaam</label>
+                    <input type="text" name="Voornaam" placeholder="Je voornaam" required>
+                </div>
+                <div>
+                    <label>Achternaam</label>
+                    <input type="text" name="Achternaam" placeholder="Je achternaam" required>
+                </div>
+                
+                <div class="full-width">
+                    <label>E-mailadres</label>
+                    <input type="email" name="Email" placeholder="naam@voorbeeld.com" required>
+                </div>
+
+                <div class="full-width">
+                    <label>Soort Project</label>
+                    <select name="Project Type">
+                        <option>Muziekvideo</option>
+                        <option>Automotive Shoot</option>
+                        <option>Merkcontent / Commercial</option>
+                        <option>Short Form (Reels/TikTok)</option>
+                        <option>Anders...</option>
+                    </select>
+                </div>
+                <div class="full-width">
+                    <label>Jouw idee</label>
+                    <textarea name="Details" rows="5" placeholder="Vertel kort wat je in gedachten hebt..." required></textarea>
+                </div>
+                <div class="full-width">
+                    <button type="submit" id="submitBtn" class="btn btn-red" style="width:100%;">Aanvraag Versturen</button>
+                    <div id="formStatus" class="form-status"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div style="max-width: 1000px; width: 100%; pointer-events: none;">
+            <h2 id="modalTitle" style="font-size: 3rem; margin-bottom: 20px; text-align: center;"></h2>
+            <div id="modalContent"></div>
+            <p style="text-align: center; margin-top: 20px; color: var(--text-dim);">Klik buiten dit venster om te sluiten</p>
+        </div>
+    </div>
+
+    <div id="preloadPool" class="preload-pool"></div>
+
+    <footer style="padding: 50px; text-align: center; opacity: 0.4; font-size: 0.7rem;">
+        VERO PRODUCTION © 2026
+    </footer>
+
+    <script>
+    const works = [
+        { 
+            id: "work-0",
+            title: "Short Movie", 
+            img: "Screenshot 2026-05-18 at 09.04.58.png",
+            video: "EHAJANRjTwg",
+			isVertical: false
+        },
+        { 
+            id: "work-1",
+            title: "Aftermovie Hackaton", 
+            img: "Screenshot 2026-05-18 at 09.21.51.png",
+            video: "LeJILICLGHs",
+			isVertical: false
+        },
+        { 
+            id: "work-2",
+            title: "Workshop hondenschool", 
+            img: "Screenshot 2026-05-18 at 09.35.44.png",
+            video: "DlLtMKoj954",
+			isVertical: false
+        }
+    ];
+
+    function init() {
+        const container = document.getElementById('portfolio-container');
+        const preloadPool = document.getElementById('preloadPool');
+
+        works.forEach(work => {
+            const card = document.createElement('div');
+            card.className = 'subject-card reveal';
+            card.innerHTML = `
+                <img src="${work.img}" class="subject-img" loading="lazy">
+                <div class="subject-overlay">
+                    <h3>${work.title}</h3>
+                </div>
+            `;
+            card.onclick = () => openModal(work.id, work.title, work.isVertical);
+            container.appendChild(card);
+
+            const frame = document.createElement('iframe');
+            frame.id = `iframe-${work.id}`;
+            frame.width = "100%";
+            frame.height = "100%";
+            frame.src = `https://www.youtube-nocookie.com/embed/${work.video}?enablejsapi=1&rel=0`;
+            frame.title = work.title;
+            frame.frameBorder = "0";
+            frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+            frame.allowFullscreen = true;
+            preloadPool.appendChild(frame);
+        });
+
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        const cursor = document.getElementById('customCursor');
+        const portfolioSection = document.getElementById('portfolio');
+
+        if (window.innerWidth > 1024) {
+            window.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            portfolioSection.addEventListener('mouseenter', () => {
+                cursor.classList.add('visible');
+            });
+
+            portfolioSection.addEventListener('mouseleave', () => {
+                cursor.classList.remove('visible');
+            });
+        }
+
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', handleFormSubmit);
+
+        lucide.createIcons();
+        animate();
+    }
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = document.getElementById('submitBtn');
+        const statusDiv = document.getElementById('formStatus');
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Verzenden...";
+        
+        statusDiv.style.display = "none";
+        statusDiv.className = "form-status";
+
+        const data = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                statusDiv.innerText = "✓ Je aanvraag is verzonden! Ik neem zo snel mogelijk contact op.";
+                statusDiv.classList.add('success');
+                statusDiv.style.display = "block";
+                form.reset();
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            statusDiv.innerText = "✕ Oeps! Er ging iets mis bij het verzenden. Probeer het nog eens.";
+            statusDiv.classList.add('error');
+            statusDiv.style.display = "block";
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Aanvraag Versturen";
+        }
+    }
+
+    let activeWorkId = null;
+
+    function openModal(workId, title, isVertical) {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const frame = document.getElementById(`iframe-${workId}`);
+        
+        document.getElementById('modalTitle').innerText = title;
+        activeWorkId = workId;
+        
+        if (isVertical) {
+            modalContent.style.aspectRatio = "9 / 16";
+            modalContent.style.width = "100%";
+            modalContent.style.maxWidth = "360px"; 
+            modalContent.style.height = "70vh";
+        } else {
+            modalContent.style.aspectRatio = "16 / 9";
+            modalContent.style.width = "100%";
+            modalContent.style.maxWidth = "1000px";
+            modalContent.style.height = "auto";
+        }
+        
+        modalContent.appendChild(frame);
+        frame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        if (activeWorkId) {
+            const frame = document.getElementById(`iframe-${activeWorkId}`);
+            frame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            document.getElementById('preloadPool').appendChild(frame);
+        }
+        
+        document.getElementById('modal').classList.remove('active');
+        document.getElementById('modalContent').innerHTML = ''; 
+        document.body.style.overflow = 'auto';
+        activeWorkId = null;
+    }
+
+    function animate() {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
+        });
+    }
+
+    window.addEventListener('scroll', animate);
+    window.onload = init;
+</script>
+</body>
+</html>

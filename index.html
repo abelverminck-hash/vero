@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vero. | High-End Videograaf & Cinematic Storytelling</title>
-    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie und social content marketing.">
+    <meta name="description" content="Vero. Cinematic Productions vangt jouw verhaal in rauwe, cinematische beelden. Specialist in automotive video's, videoclip productie en social content marketing.">
     <meta name="keywords" content="Vero, videograaf, video productie, videoclip laten maken, automotive video, Vero productions, Abel Verminck">
     <meta name="author" content="Vero.">
     
@@ -261,22 +261,34 @@
             color: var(--accent-red);
         }
 
-        /* --- Footer Instagram Link Style --- */
+        /* --- Footer (AANGEPAST) --- */
+        footer {
+            padding: 80px 8% 40px 8%;
+            text-align: center;
+            background: #000;
+            border-top: 1px solid #111;
+        }
+        .footer-logo { font-size: 2.2rem; font-weight: 800; color: white; text-decoration: none; letter-spacing: -1px; margin-bottom: 20px; display: inline-block; }
+        .footer-logo span { color: var(--accent-red); }
+        .footer-tagline { color: var(--text-dim); margin-bottom: 40px; font-size: 1rem; }
+        
         .footer-insta {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
             transition: color 0.3s, transform 0.3s;
         }
         .footer-insta:hover {
             color: var(--accent-red);
             transform: translateY(-2px);
         }
+        
+        .footer-copyright { opacity: 0.3; font-size: 0.7rem; letter-spacing: 1px; }
 
         /* --- Modal (Pop-up) --- */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 50px; overflow-y: auto; }
@@ -518,19 +530,21 @@
         <div style="max-width: 1000px; width: 100%; pointer-events: none;">
             <h2 id="modalTitle" style="font-size: 3rem; margin-bottom: 20px; text-align: center;"></h2>
             <div id="modalContent"></div>
-            <p style="text-align: center; margin-top: 20px; color: var(--text-dim);">Klik buiten dit venster om te sluiten</p>
+            <p style="text-align: center; margin-top: 20px; color: var(--text-dim);"> Klik buiten dit venster om te sluiten</p>
         </div>
     </div>
 
     <div id="preloadPool" class="preload-pool"></div>
 
-    <footer style="padding: 60px 20px 40px 20px; text-align: center; background: #050505; border-top: 1px solid #111;">
-        <div style="margin-bottom: 15px;">
+    <footer>
+        <a href="#" class="footer-logo">Vero<span>.</span></a>
+        <p class="footer-tagline">Cinematic productions that make an impact.</p>
+        <div>
             <a href="https://www.instagram.com/ver0productions?igsh=aGFiNGw4cTlla3Qy&utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-insta">
-                <i data-lucide="instagram" style="width: 18px; height: 18px;"></i> @ver0productions
+                <i data-lucide="instagram" style="width: 20px; height: 20px;"></i> Volg ons op Instagram
             </a>
         </div>
-        <p style="opacity: 0.4; font-size: 0.7rem; letter-spacing: 1px;">VERO PRODUCTION © 2026</p>
+        <p class="footer-copyright">VERO PRODUCTION © 2026</p>
     </footer>
 
     <script>
